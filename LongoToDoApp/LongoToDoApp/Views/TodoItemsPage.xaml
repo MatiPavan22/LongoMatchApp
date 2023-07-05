@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:LongoToDoApp.ViewModels"  
+             xmlns:model="clr-namespace:LongoToDoApp.Models" 
+             x:Class="LongoToDoApp.Views.TodoItemsPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:DataType="local:TodoItemsViewModel" RefreshCommand="{Binding LoadTodoItemsCommand}" 
+                      ItemsSource="{Binding TodoItems}" x:Name="listViewTodoItems" IsPullToRefreshEnabled="True" 
+                      IsRefreshing="{Binding IsBusy}" AutomationId="listViewTodoItems">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell x:DataType="model:TodoItem">
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="OnDelete"
+                                  CommandParameter="{Binding .}"
+                                  Text="Delete" IsDestructive="True" AutomationId="DeleteActionButton" />
+                            </ViewCell.ContextActions>
+                            <FlexLayout Direction="Row" Padding="10">
+                                <Label Text="{Binding Name}" LineBreakMode="NoWrap" FontSize="14" FlexLayout.Grow="1" AutomationId="{Binding Key, StringFormat='{0}_lbl_name'}" />
+                                <CheckBox x:Uid="{Binding Key}" IsChecked="{Binding IsComplete}" CheckedChanged="onUpdateTodoItem" AutomationId="cb_IsComplete" />
+                            </FlexLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="New" VerticalOptions="End" Clicked="onAddTodoItem" AutomationId="AddButton"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,11 @@
+*.user
+*\bin
+*\obj
+
+*.vscode
+.browserslistrc
+.gitkeep
+
+.vs
+
+*\packages
